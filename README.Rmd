@@ -64,7 +64,7 @@ tbd.
 
 
 
-# Part 2: Project management
+# Part 2: Package building and management
 
 Most of the action happens in the data-raw folder scripts and folders.
 

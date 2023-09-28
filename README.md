@@ -4,7 +4,8 @@
       - [chap2\_Coffee example](#chap2_coffee-example)
       - [chap10\_CatJumpingFull example](#chap10_catjumpingfull-example)
       - [cd (course director) example](#cd-course-director-example)
-  - [Part 2: Project management](#part-2-project-management)
+  - [Part 2: Package building and
+    management](#part-2-package-building-and-management)
   - [Part 3. All datasets listed](#part-3-all-datasets-listed)
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
@@ -68,7 +69,7 @@ chap10_CatJumpingFull %>%
 
 tbd.
 
-# Part 2: Project management
+# Part 2: Package building and management
 
 Most of the action happens in the data-raw folder scripts and folders.
 
