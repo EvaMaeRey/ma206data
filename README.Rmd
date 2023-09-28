@@ -73,19 +73,19 @@ Most of the action happens in the data-raw folder scripts and folders.
 ```{r}
 fs::dir_ls("data-raw/")
 ```
-1. gathering data: 
+1. Gathering data: 
 
-- The *folder* **data-raw/course_director_data** is populated manually with csvs
-- The *folder* **data-raw/isi_txt_data** is populated automatically using the script **data-raw/01_scrape_isi_ed2.R**
+- The folder [**data-raw/course_director_data**](https://github.com/EvaMaeRey/ma206data/tree/master/data-raw/course_director_data) is populated manually with csvs
+- The folder [**data-raw/isi_txt_data**](https://github.com/EvaMaeRey/ma206data/tree/master/data-raw/isi_txt_data) is populated automatically using the script [**data-raw/01_scrape_isi_ed2.R**](https://github.com/EvaMaeRey/ma206data/blob/master/data-raw/01_scrape_isi_ed2.R)
 
-2. converting to native R format and saving to package's 'data' folder using:
+2. Converting to native R format and saving to package's 'data' folder using:
 
-- **data-raw/02_save_course_director_data_as_rda_for_package.R**
-- **data-raw/02_save_isi_data_as_rda_for_package.R**
+- [**data-raw/02_save_course_director_data_as_rda_for_package.R**](https://github.com/EvaMaeRey/ma206data/blob/master/data-raw/02_save_course_director_data_as_rda_for_package.R)
+- [**data-raw/02_save_isi_data_as_rda_for_package.R**](https://github.com/EvaMaeRey/ma206data/blob/master/data-raw/02_save_isi_data_as_rda_for_package.R)
 
 3. Document the datasets by running:
 
-- **data-raw/03_write_dataset_minimal_documentation.R** is executed, which creates, the file **data/datasets_listed.R** which documents (minimally) the datasets for the package, making them usable.
+- [**data-raw/03_write_dataset_minimal_documentation.R**](https://github.com/EvaMaeRey/ma206data/blob/master/data-raw/03_write_dataset_minimal_documentation.R) is executed, which creates, the file [**data/datasets_listed.R**](https://github.com/EvaMaeRey/ma206data/blob/master/data/datasets_listed.R) which documents (minimally) the datasets for the package, making them usable.
 
 
 

@@ -82,24 +82,27 @@ fs::dir_ls("data-raw/")
 #> data-raw/isi_txt_data
 ```
 
-1.  gathering data:
+1.  Gathering data:
 
 <!-- end list -->
 
-  - The *folder* **data-raw/course\_director\_data** is populated
-    manually with csvs
-  - The *folder* **data-raw/isi\_txt\_data** is populated automatically
-    using the script **data-raw/01\_scrape\_isi\_ed2.R**
+  - The folder
+    [**data-raw/course\_director\_data**](https://github.com/EvaMaeRey/ma206data/tree/master/data-raw/course_director_data)
+    is populated manually with csvs
+  - The folder
+    [**data-raw/isi\_txt\_data**](https://github.com/EvaMaeRey/ma206data/tree/master/data-raw/isi_txt_data)
+    is populated automatically using the script
+    [**data-raw/01\_scrape\_isi\_ed2.R**](https://github.com/EvaMaeRey/ma206data/blob/master/data-raw/01_scrape_isi_ed2.R)
 
 <!-- end list -->
 
-2.  converting to native R format and saving to package’s ‘data’ folder
+2.  Converting to native R format and saving to package’s ‘data’ folder
     using:
 
 <!-- end list -->
 
-  - **data-raw/02\_save\_course\_director\_data\_as\_rda\_for\_package.R**
-  - **data-raw/02\_save\_isi\_data\_as\_rda\_for\_package.R**
+  - [**data-raw/02\_save\_course\_director\_data\_as\_rda\_for\_package.R**](https://github.com/EvaMaeRey/ma206data/blob/master/data-raw/02_save_course_director_data_as_rda_for_package.R)
+  - [**data-raw/02\_save\_isi\_data\_as\_rda\_for\_package.R**](https://github.com/EvaMaeRey/ma206data/blob/master/data-raw/02_save_isi_data_as_rda_for_package.R)
 
 <!-- end list -->
 
@@ -107,10 +110,11 @@ fs::dir_ls("data-raw/")
 
 <!-- end list -->
 
-  - **data-raw/03\_write\_dataset\_minimal\_documentation.R** is
-    executed, which creates, the file **data/datasets\_listed.R** which
-    documents (minimally) the datasets for the package, making them
-    usable.
+  - [**data-raw/03\_write\_dataset\_minimal\_documentation.R**](https://github.com/EvaMaeRey/ma206data/blob/master/data-raw/03_write_dataset_minimal_documentation.R)
+    is executed, which creates, the file
+    [**data/datasets\_listed.R**](https://github.com/EvaMaeRey/ma206data/blob/master/data/datasets_listed.R)
+    which documents (minimally) the datasets for the package, making
+    them usable.
 
 # Part 3. All datasets listed
 
