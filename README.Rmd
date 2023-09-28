@@ -1,5 +1,7 @@
 ---
-output: github_document
+output: 
+  github_document:
+    toc: TRUE
 ---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
@@ -13,95 +15,82 @@ knitr::opts_chunk$set(
 )
 ```
 
-# ma206data
+# Part 1: ma206data goals and examples
 
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of ma206data is to make the Introduction to Statistical Investigations, Edition II datasets quickly accessible in R.
+The goal of ma206data is to make the 'Introduction to Statistical Investigations, Edition II' datasets and other course data sets quickly accessible in R.
 
 ``` r
 remotes::install_github("EvaMaeRey/ma206data")
 ```
 
-## Here are some datasets made easily available and ready to explore!
+## chap2_Coffee example
 
-```{r example}
+```{r example, message = F, warning=F}
 library(tidyverse)
 library(ma206data)
 ## basic example code
 
-chap2_Coffee # bam chapter 2 coffee data in your workstation - rock and roll
+chap2_Coffee %>% head()
+
 
 chap2_Coffee %>% 
   ggplot() +
   aes(cups_per_week) + 
   geom_rug() + 
-  geom_histogram() + 
-  ggxmean::geom_x_mean() + # development package
-  ggxmean::geom_x_mean_label(size = 2) # development package
+  geom_histogram()
+```
 
-last_plot() + 
-  ggsample::facet_bootstrap(n_facets = 16) # development package
+## chap10_CatJumpingFull example
 
-chap10_DraftLottery %>% 
-  data.frame() %>% 
+```{r}
+chap10_CatJumpingFull %>% 
   ggplot() + 
-  aes(x = sequential_date,
-      y = draft_number) + 
-  geom_point() + 
-  geom_density2d_filled(alpha = .2) + 
-  geom_smooth()
-
-last_plot() + 
-  ggsample::facet_scramble() # development package
+  aes(x = body_mass_g, 
+      y = takeoff_velocity_cm_sec, 
+      color = sex_0_f_1_m) + 
+  geom_point()
 ```
 
-# We managed the project by doing the following
+## cd (course director) example
 
-## ISI data
+tbd.
 
-- scraping http://www.isi-stats.com/isi2nd/data.html for .txt files, saving them in "isi_txt_data"
-- reading those files into r
-- saving an .rda file
-
-This was accomplished in "./data-raw/scrape_and_prep_isi_ed2.R".  We quote the code here:
-
-```{r, echo=F}
-scrape_and_prep_isi_ed2_script <- readLines("./data-raw/scrape_and_prep_isi_ed2.R")
-```
-
-```{r, code = scrape_and_prep_isi_ed2_script, eval = F}
-
-```
-
-## Additional data from course director
-
-- we manually copied in additional data files used in the course into "data-raw/course_director_data"
-- read the files into R 
-- saved rda files into the data folder
-
-This is accomplished in the script, "./data-raw/prep_course_director_data.R", and the code is shown here:
-
-```{r, echo = F}
-prep_course_director_data_script <- readLines("./data-raw/prep_course_director_data.R")
-```
-
-```{r, code = prep_course_director_data_script, eval = F}
-
+```{r}
 ```
 
 
-# Documentation
-
-Finally, we coordinated minimal documentation in "./data-raw/write_dataset_minimal_documentation.R"
-
-The code is quoted here:
 
 
-```{r, echo = F}
-write_dataset_minimal_documentation_script <- readLines("./data-raw/write_dataset_minimal_documentation.R")
+# Part 2: Project management
+
+Most of the action happens in the data-raw folder scripts and folders.
+
+
+
+```{r}
+fs::dir_ls("data-raw/")
 ```
+1. gathering data: 
 
-```{r, code = write_dataset_minimal_documentation_script, eval = F}
+- The *folder* **data-raw/course_director_data** is populated manually with csvs
+- The *folder* **data-raw/isi_txt_data** is populated automatically using the script **data-raw/01_scrape_isi_ed2.R**
+
+2. converting to native R format and saving to package's 'data' folder using:
+
+- **data-raw/02_save_course_director_data_as_rda_for_package.R**
+- **data-raw/02_save_isi_data_as_rda_for_package.R**
+
+3. Document the datasets by running:
+
+- **data-raw/03_write_dataset_minimal_documentation.R** is executed, which creates, the file **data/datasets_listed.R** which documents (minimally) the datasets for the package, making them usable.
+
+
+
+# Part 3. All datasets listed
+
+```{r}
+data(package = "ma206data", verbose = T)$results[,"Item"]
 ```

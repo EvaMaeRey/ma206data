@@ -1,267 +1,174 @@
 
+  - [Part 1: ma206data goals and
+    examples](#part-1-ma206data-goals-and-examples)
+      - [chap2\_Coffee example](#chap2_coffee-example)
+      - [chap10\_CatJumpingFull example](#chap10_catjumpingfull-example)
+      - [cd (course director) example](#cd-course-director-example)
+  - [Part 2: Project management](#part-2-project-management)
+  - [Part 3. All datasets listed](#part-3-all-datasets-listed)
+
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# ma206data
+# Part 1: ma206data goals and examples
 
 <!-- badges: start -->
 
 <!-- badges: end -->
 
-The goal of ma206data is to make the Introduction to Statistical
-Investigations, Edition II datasets quickly accessible in R.
+The goal of ma206data is to make the ‘Introduction to Statistical
+Investigations, Edition II’ datasets and other course data sets quickly
+accessible in R.
 
 ``` r
 remotes::install_github("EvaMaeRey/ma206data")
 ```
 
-## Here are some datasets made easily available and ready to explore\!
+## chap2\_Coffee example
 
 ``` r
 library(tidyverse)
-#> ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.0 ──
-#> ✓ ggplot2 3.3.5     ✓ purrr   0.3.4
-#> ✓ tibble  3.1.6     ✓ dplyr   1.0.8
-#> ✓ tidyr   1.0.2     ✓ stringr 1.4.0
-#> ✓ readr   1.3.1     ✓ forcats 0.5.0
-#> Warning: package 'ggplot2' was built under R version 3.6.2
-#> Warning: package 'tibble' was built under R version 3.6.2
-#> Warning: package 'purrr' was built under R version 3.6.2
-#> Warning: package 'dplyr' was built under R version 3.6.2
-#> ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
-#> x dplyr::filter() masks stats::filter()
-#> x dplyr::lag()    masks stats::lag()
 library(ma206data)
 ## basic example code
 
-chap2_Coffee # bam chapter 2 coffee data in your workstation - rock and roll
-#> # A tibble: 15 × 1
-#>    cups_per_week
-#>            <dbl>
-#>  1             0
-#>  2             5
-#>  3             0
-#>  4             0
-#>  5             2
-#>  6            10
-#>  7             0
-#>  8             4
-#>  9             3
-#> 10             0
-#> 11             1
-#> 12            10
-#> 13             2
-#> 14            20
-#> 15             0
+chap2_Coffee %>% head()
+#> # A tibble: 6 × 1
+#>   cups_per_week
+#>           <dbl>
+#> 1             0
+#> 2             5
+#> 3             0
+#> 4             0
+#> 5             2
+#> 6            10
+
 
 chap2_Coffee %>% 
   ggplot() +
   aes(cups_per_week) + 
   geom_rug() + 
-  geom_histogram() + 
-  ggxmean::geom_x_mean() + # development package
-  ggxmean::geom_x_mean_label(size = 2) # development package
-#> `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+  geom_histogram()
 ```
 
 <img src="man/figures/README-example-1.png" width="100%" />
 
-``` r
-
-last_plot() + 
-  ggsample::facet_bootstrap(n_facets = 16) # development package
-#> `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
-```
-
-<img src="man/figures/README-example-2.png" width="100%" />
+## chap10\_CatJumpingFull example
 
 ``` r
-
-chap10_DraftLottery %>% 
-  data.frame() %>% 
+chap10_CatJumpingFull %>% 
   ggplot() + 
-  aes(x = sequential_date,
-      y = draft_number) + 
-  geom_point() + 
-  geom_density2d_filled(alpha = .2) + 
-  geom_smooth()
-#> `geom_smooth()` using method = 'loess' and formula 'y ~ x'
+  aes(x = body_mass_g, 
+      y = takeoff_velocity_cm_sec, 
+      color = sex_0_f_1_m) + 
+  geom_point()
 ```
 
-<img src="man/figures/README-example-3.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-2-1.png" width="100%" />
+
+## cd (course director) example
+
+tbd.
+
+# Part 2: Project management
+
+Most of the action happens in the data-raw folder scripts and folders.
 
 ``` r
-
-last_plot() + 
-  ggsample::facet_scramble() # development package
-#> `geom_smooth()` using method = 'loess' and formula 'y ~ x'
+fs::dir_ls("data-raw/")
+#> data-raw/01_scrape_isi_ed2.R
+#> data-raw/02_save_course_director_data_as_rda_for_package.R
+#> data-raw/02_save_isi_data_as_rda_for_package.R
+#> data-raw/03_write_dataset_minimal_documentation.R
+#> data-raw/course_director_data
+#> data-raw/isi_txt_data
 ```
 
-<img src="man/figures/README-example-4.png" width="100%" />
+1.  gathering data:
 
-# We managed the project by doing the following
+<!-- end list -->
 
-## ISI data
+  - The *folder* **data-raw/course\_director\_data** is populated
+    manually with csvs
+  - The *folder* **data-raw/isi\_txt\_data** is populated automatically
+    using the script **data-raw/01\_scrape\_isi\_ed2.R**
 
-  - scraping <http://www.isi-stats.com/isi2nd/data.html> for .txt files,
-    saving them in “isi\_txt\_data”
-  - reading those files into r
-  - saving an .rda file
+<!-- end list -->
 
-This was accomplished in “./data-raw/scrape\_and\_prep\_isi\_ed2.R”. We
-quote the code here:
+2.  converting to native R format and saving to package’s ‘data’ folder
+    using:
 
-``` r
-## code to prepare `DATASET` dataset goes here
-#
-# AP.BottledWater = readr::read_csv("data-raw/AP.BottledWater.csv")
-#
-# usethis::use_data(AP.BottledWater, overwrite = TRUE)
+<!-- end list -->
 
-####################################################################
+  - **data-raw/02\_save\_course\_director\_data\_as\_rda\_for\_package.R**
+  - **data-raw/02\_save\_isi\_data\_as\_rda\_for\_package.R**
 
+<!-- end list -->
 
-library(tidyverse)
-# look at text of html file
-readLines("http://www.isi-stats.com/isi2nd/data.html") %>%
-  # each line is content in data frame
-  tibble(text = .) %>%
-  filter(str_detect(text, "\\.txt")) %>%
-  mutate(href =
-           str_extract(text, "http.+\\.txt"),
-         .before = 1) %>%
-  mutate(dataset_name = str_extract(href, "data.+"),
-         .before = 1) %>%
-  mutate(dataset_name =
-           str_remove(dataset_name, "data."),
-         .before = 1) %>%
-  mutate(dataset_name =
-           str_remove(dataset_name, "\\.txt")) %>%
-  mutate(dataset_name =
-           str_replace(dataset_name, "\\/", "_")) ->
-  href_df
+3.  Document the datasets by running:
 
-href_df$dataset_name
+<!-- end list -->
 
+  - **data-raw/03\_write\_dataset\_minimal\_documentation.R** is
+    executed, which creates, the file **data/datasets\_listed.R** which
+    documents (minimally) the datasets for the package, making them
+    usable.
 
-## Download raw data .txt files in isi folder in data-raw
-isi_dir <- "data-raw/isi_txt_data/"
-dir.create(isi_dir)
-
-for (i in 1:length(href_df$href)){
-
-  Sys.sleep(time = 1)
-  try(
-  download.file(url = href_df$href[i],
-                destfile = paste0(isi_dir, href_df$dataset_name[i], ".txt"))
-  )
-}
-
-# clean a bit and convert to .rda files, send to package data folder
-
-isi_file_paths <- fs::dir_ls("data-raw/isi_txt_data/")
-length(isi_file_paths)
-
-dataset_name <- isi_file_paths %>%
-  str_remove("data-raw/isi_txt_data/") %>%
-  str_remove(".txt$")
-
-## a list that populates with datasets
-isi_datasets <- list()
-
-
-for (i in 1:length(isi_file_paths)){
-
-
-  # pause so you don't hit isi website too often
-  Sys.sleep(time = .2)
-
-  # attempt to harvest data
-  tryCatch(
-
-    isi_file_paths[i] %>%
-      readr::read_delim(delim = "\t") %>%
-      janitor::clean_names() ->
-    isi_datasets[[i]]
-
-  )
-
-  assign(x = dataset_name[i], value = isi_datasets[[i]])
-
-  save(list = dataset_name[i],
-       file = paste0("data/", dataset_name[i], ".rda"))
-
-  }
-```
-
-## Additional data from course director
-
-  - we manually copied in additional data files used in the course into
-    “data-raw/course\_director\_data”
-  - read the files into R
-  - saved rda files into the data folder
-
-This is accomplished in the script,
-“./data-raw/prep\_course\_director\_data.R”, and the code is shown
-here:
+# Part 3. All datasets listed
 
 ``` r
-
-
-library(tidyverse)
-# look at text of html file
-
-# csvs were
-fs::dir_ls(path = "data-raw/course_director_data/") ->
-  course_director_csvs
-
-# clean a bit and convert to .rda files, send to package data folder
-
-
-dataset_name <- course_director_csvs %>%
-  str_remove("data-raw/course_director_data/") %>%
-  str_remove(".csv$")
-
-## a list that populates with datasets
-course_director_datasets <- list()
-
-
-for (i in 1:length(course_director_csvs)){
-
-
-  # attempt to read in data
-  tryCatch(
-
-    course_director_csvs[i] %>%
-      readr::read_csv() %>%
-      janitor::clean_names() ->
-    course_director_datasets[[i]]
-
-  )
-
-  # assignment without assignment operator
-  assign(x = dataset_name[i], value = course_director_datasets[[i]])
-
-  #
-  save(list = dataset_name[i],
-       file = paste0("data/", "cd_", dataset_name[i], ".rda"))
-
-  }
-```
-
-# Documentation
-
-Finally, we coordinated minimal documentation in
-“./data-raw/write\_dataset\_minimal\_documentation.R”
-
-The code is quoted here:
-
-``` r
-
-
-# Write 'docs' (minimal possible)
-
-list.files(path = "data") %>%
-  str_remove(".rda$") %>%
-  paste0("'", .,"'") %>%
-  writeLines("R/datasets_listed.R")
+data(package = "ma206data", verbose = T)$results[,"Item"]
+#>   [1] "alexandria (cd_alexandria)"        "anchorage (cd_anchorage)"         
+#>   [3] "chap10_AgeBMI"                     "chap10_AlcoholSmoke"              
+#>   [5] "chap10_CatJumping"                 "chap10_CatJumpingFull"            
+#>   [7] "chap10_DraftLottery"               "chap10_ExerciseMood"              
+#>   [9] "chap10_Facebook"                   "chap10_FootHeight"                
+#>  [11] "chap10_GPA"                        "chap10_HeightHaircut"             
+#>  [13] "chap10_HondaAgePrice"              "chap10_MissClassGPA"              
+#>  [15] "chap10_SleepGPA"                   "chap10_StroopAgeTime"             
+#>  [17] "chap10_TempHeart"                  "chap10_TextbookPrices"            
+#>  [19] "chap10_WeightHaircut"              "chap10_Whales"                    
+#>  [21] "chap10_Wimbledon"                  "chap10_WimbledonMF"               
+#>  [23] "chap10_legos"                      "chap2_Coffee"                     
+#>  [25] "chap2_FemaleTemp"                  "chap2_LaughIncrease"              
+#>  [27] "chap2_MaleTemp"                    "chap2_MarriageAgesDiff"           
+#>  [29] "chap2_Morphing"                    "chap2_MorphingMirror"             
+#>  [31] "chap2_PredictedScore"              "chap2_SleepTimes"                 
+#>  [33] "chap2_SnippetEstimate"             "chap2_SnippetPopulation"          
+#>  [35] "chap2_Texts"                       "chap3_AgeFirstChild"              
+#>  [37] "chap3_AirDryers"                   "chap3_CollegeMidwest"             
+#>  [39] "chap3_GettysburgAddress"           "chap3_Hockey"                     
+#>  [41] "chap3_Hockey2"                     "chap3_MaleTemp"                   
+#>  [43] "chap3_MarriageAgesDiff"            "chap3_SleepTimes"                 
+#>  [45] "chap3_SnakeAge"                    "chap3_TVTime"                     
+#>  [47] "chap3_TimeEstimate"                "chap3_UsedCars"                   
+#>  [49] "chap5_Blood"                       "chap5_Dolphin"                    
+#>  [51] "chap5_Gilbert"                     "chap5_Smoking"                    
+#>  [53] "chap5_Yawning"                     "chap6_CloseFriends"               
+#>  [55] "chap6_DungBeetles"                 "chap6_InhibitoryControl-2"        
+#>  [57] "chap6_OldFaithful"                 "chap6_SleepDeprivation"           
+#>  [59] "chap6_VideoAggression"             "chap7_AirDryers2"                 
+#>  [61] "chap7_Auction"                     "chap7_DadJokes"                   
+#>  [63] "chap7_FirstBase"                   "chap7_JJvsBicycle"                
+#>  [65] "chap8_ActivityAging"               "chap8_Acupuncture"                
+#>  [67] "chap8_Alligators"                  "chap8_Alligators2"                
+#>  [69] "chap8_AlligatorsLakeGroup"         "chap8_EstimatingEnergyExpenditure"
+#>  [71] "chap8_EstimatingEnergyIntake"      "chap8_FishAndCancer"              
+#>  [73] "chap8_Goals"                       "chap8_HIVintervention"            
+#>  [75] "chap8_HappinessIncome"             "chap8_HeartDiseaseBaldness"       
+#>  [77] "chap8_MarriageViews"               "chap8_NightLight1"                
+#>  [79] "chap8_NightLight2"                 "chap8_OrganDonor"                 
+#>  [81] "chap8_PolitPartySurveyA"           "chap8_PolitPartySurveyB"          
+#>  [83] "chap8_Rebate"                      "chap8_SexBreakfast"               
+#>  [85] "chap8_SexPhoneType"                "chap8_SleepApnea"                 
+#>  [87] "chap8_SocialNormsLocation"         "chap8_SocialNormsSex"             
+#>  [89] "chap8_SocialNormsSpeed"            "chap8_Stop"                       
+#>  [91] "chap8_Towels"                      "chap8_TreatmentRace"              
+#>  [93] "chap9_Aggression"                  "chap9_Brain"                      
+#>  [95] "chap9_Comprehension"               "chap9_Diets"                      
+#>  [97] "chap9_Donation"                    "chap9_FlightTimes"                
+#>  [99] "chap9_HeartRates"                  "chap9_Mercury"                    
+#> [101] "chap9_Recall"                      "chap9_SocialMediaandSelfEsteem"   
+#> [103] "chap9_VideoMood"                   "charlotte (cd_charlotte)"         
+#> [105] "freethrows (cd_freethrows)"        "honolulu (cd_honolulu)"           
+#> [107] "opioids (cd_opioids)"              "prelim_NationalAnthemTimes"       
+#> [109] "prelim_OrganDonor"
 ```
